@@ -1,0 +1,15 @@
+[
+  {
+    "id": "1",
+    "date": "2025-06-28",
+    "supplier": "Tech Supplies Inc",
+    "products": [
+      {
+        "productId": "1",
+        "quantity": 10,
+        "cost": 700
+      }
+    ],
+    "total": 7000
+  }
+]

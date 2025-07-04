@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1",
+    "date": "2025-06-30",
+    "customer": "John Doe",
+    "products": [
+      {
+        "productId": "1",
+        "quantity": 1,
+        "price": 999
+      }
+    ],
+    "total": 999,
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "id": "2",
+    "date": "2025-06-29",
+    "customer": "Jane Smith",
+    "products": [
+      {
+        "productId": "2",
+        "quantity": 2,
+        "price": 29
+      }
+    ],
+    "total": 58,
+    "paymentMethod": "Cash"
+  }
+]

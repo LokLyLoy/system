@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "name": "Laptop",
+    "sku": "LAP001",
+    "price": 999,
+    "stock": 15,
+    "minStock": 10,
+    "category": "Electronics"
+  },
+  {
+    "id": "2",
+    "name": "Mouse",
+    "sku": "MOU001",
+    "price": 29,
+    "stock": 5,
+    "minStock": 20,
+    "category": "Accessories"
+  },
+  {
+    "id": "3",
+    "name": "Keyboard",
+    "sku": "KEY001",
+    "price": 79,
+    "stock": 25,
+    "minStock": 15,
+    "category": "Accessories"
+  }
+]
