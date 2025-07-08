@@ -10,8 +10,6 @@ const PaymentsReport: React.FC<PaymentsReportProps> = ({ sales }) => {
     const [dateRange, setDateRange] = useState<'week' | 'month' | 'year' | 'all'>('month');
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
 
     // Filter sales based on date range
     const filterSalesByDateRange = () => {

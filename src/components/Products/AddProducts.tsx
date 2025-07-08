@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Product } from '@/types';
 import { Package, RefreshCw, Upload, X, CheckCircle } from 'lucide-react';
 import categoriesData from '@/data/category.json';
+import Image from "next/image";
 
 interface AddProductProps {
     products: Product[];
@@ -310,7 +311,7 @@ const AddProduct: React.FC<AddProductProps> = ({ products, setProducts, setActiv
                         <div className="flex items-center space-x-4">
                             {imagePreview ? (
                                 <div className="relative">
-                                    <img
+                                    <Image
                                         src={imagePreview}
                                         alt="Product preview"
                                         className="w-32 h-32 object-cover rounded-lg shadow-md"

@@ -6,7 +6,6 @@ import {
     ShoppingCart,
     TrendingUp,
     TrendingDown,
-    Users,
     Clock,
     Gauge
 } from 'lucide-react';
@@ -68,7 +67,7 @@ const Dashboard: React.FC<DashboardProps> = ({ products, sales, purchases }) => 
                     Dashboard
                 </h2>
 
-                <p className="text-gray-600">Welcome back! Here's an overview of your business.</p>
+                <p className="text-gray-600">Welcome back! Here&apos;s an overview of your business.</p>
             </div>
 
             {/* Key Metrics */}
@@ -122,7 +121,7 @@ const Dashboard: React.FC<DashboardProps> = ({ products, sales, purchases }) => 
                 <div className="bg-white p-6 rounded-lg shadow">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-gray-600 text-sm">Today's Sales</p>
+                            <p className="text-gray-600 text-sm">Today&apos;s Sales</p>
                             <p className="text-2xl font-bold mt-1">{todaySales}</p>
                             <p className="text-sm text-gray-500 mt-2">${todayRevenue.toFixed(2)} revenue</p>
                         </div>

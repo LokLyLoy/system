@@ -87,7 +87,7 @@ const DailySalesReport: React.FC<DailySalesReportProps> = ({ sales }) => {
                 </div>
 
                 <div className="bg-white p-6 rounded-xl shadow">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">🧾 Today's Transactions</h3>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4">🧾 Today&apos;s Transactions</h3>
                     {todaySales.length === 0 ? (
                         <p className="text-gray-500">No sales recorded today</p>
                     ) : (

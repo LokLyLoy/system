@@ -47,7 +47,7 @@ const Navigation: React.FC = () => {
                     className='w-[50px] h-auto'
                 />
 
-                LokLy's <span className="text-blue-600">System</span>
+                LokLy&apos;s <span className="text-blue-600">System</span>
             </h1>
 
             {/* Right Side Controls */}
