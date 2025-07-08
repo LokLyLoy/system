@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Search, Calendar, Filter, Download, Eye } from 'lucide-react';
+import {Search, Download, Eye, PlusCircle, Banknote, BanknoteArrowUp} from 'lucide-react';
 import { Sale, Product } from '@/types';
 import InvoiceModal from "@/components/Invoice/SaleInvoice";
+import {useRouter} from "next/navigation";
+import {Wallet} from "@phosphor-icons/react";
 
 interface SalesListProps {
     sales: Sale[];
@@ -14,6 +16,7 @@ const SalesList: React.FC<SalesListProps> = ({ sales, products }) => {
     const [paymentFilter, setPaymentFilter] = useState('all');
     const [showDetails, setShowDetails] = useState<string | null>(null);
     const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
+    const router = useRouter();
 
     // Get unique payment methods
     const paymentMethods = Array.from(new Set(sales.map(s => s.paymentMethod)));
@@ -69,41 +72,48 @@ const SalesList: React.FC<SalesListProps> = ({ sales, products }) => {
 
     return (
         <div className="p-6">
-            <div className="mb-6">
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-bold">Sales List</h2>
-                    <button
-                        onClick={exportToCSV}
-                        className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 flex items-center"
-                    >
-                        <Download className="w-4 h-4 mr-2" />
-                        Export CSV
-                    </button>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                {/* Revenue Card */}
+                <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition duration-300">
+                    <div className="flex items-center justify-between mb-2">
+                        <div className="text-green-600 bg-green-100 rounded-full p-2">
+                            <Banknote className='w-6 h-6 '/>
+                        </div>
+                        <span className="text-sm text-gray-500">Total Revenue</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-green-600">${totalRevenue.toFixed(2)}</h2>
                 </div>
 
-                {/* Summary Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                    <div className="bg-white p-4 rounded-lg shadow">
-                        <p className="text-sm text-gray-600">Total Revenue</p>
-                        <p className="text-2xl font-bold text-green-600">${totalRevenue.toFixed(2)}</p>
+                {/* Transactions Card */}
+                <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition duration-300">
+                    <div className="flex items-center justify-between mb-2">
+                        <div className="text-blue-600 bg-blue-100 rounded-full p-2">
+                            <BanknoteArrowUp className='w-6 h-6'/>
+                        </div>
+                        <span className="text-sm text-gray-500">Transactions</span>
                     </div>
-                    <div className="bg-white p-4 rounded-lg shadow">
-                        <p className="text-sm text-gray-600">Total Transactions</p>
-                        <p className="text-2xl font-bold text-blue-600">{totalTransactions}</p>
+                    <h2 className="text-3xl font-bold text-blue-600">{totalTransactions}</h2>
+                </div>
+
+                {/* Average Sale Card */}
+                <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition duration-300">
+                    <div className="flex items-center justify-between mb-2">
+                        <div className="text-purple-600 bg-purple-100 rounded-full p-2">
+                            <Wallet className='w-6 h-6'/>
+                        </div>
+                        <span className="text-sm text-gray-500">Average Sale</span>
                     </div>
-                    <div className="bg-white p-4 rounded-lg shadow">
-                        <p className="text-sm text-gray-600">Average Sale</p>
-                        <p className="text-2xl font-bold text-purple-600">
-                            ${totalTransactions > 0 ? (totalRevenue / totalTransactions).toFixed(2) : '0.00'}
-                        </p>
-                    </div>
+                    <h2 className="text-3xl font-bold text-purple-600">
+                        ${totalTransactions > 0 ? (totalRevenue / totalTransactions).toFixed(2) : '0.00'}
+                    </h2>
                 </div>
             </div>
 
-            {/* Filters */}
+
             <div className="bg-white p-4 rounded-lg shadow mb-6">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div className="md:col-span-2">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                    {/* Search input */}
+                    <div className="md:col-span-3">
                         <div className="relative">
                             <Search className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
                             <input
@@ -116,50 +126,17 @@ const SalesList: React.FC<SalesListProps> = ({ sales, products }) => {
                         </div>
                     </div>
 
-                    <div>
-                        <div className="relative">
-                            <Calendar className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
-                            <input
-                                type="date"
-                                value={dateFilter}
-                                onChange={(e) => setDateFilter(e.target.value)}
-                                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
-                    </div>
-
-                    <div>
-                        <select
-                            value={paymentFilter}
-                            onChange={(e) => setPaymentFilter(e.target.value)}
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    {/* Add Sale button aligned right */}
+                    <div className="flex justify-end">
+                        <button
+                            onClick={() => router.push('/sales/add')}
+                            className="cursor-pointer flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
                         >
-                            <option value="all">All Payment Methods</option>
-                            {paymentMethods.map(method => (
-                                <option key={method} value={method}>{method}</option>
-                            ))}
-                        </select>
+                            <PlusCircle className="w-5 h-5" />
+                            Add Sale
+                        </button>
                     </div>
                 </div>
-
-                {(searchTerm || dateFilter || paymentFilter !== 'all') && (
-                    <div className="mt-3 flex items-center text-sm text-gray-600">
-                        <Filter className="w-4 h-4 mr-1" />
-                        Showing {filteredSales.length} of {sales.length} sales
-                        {(searchTerm || dateFilter || paymentFilter !== 'all') && (
-                            <button
-                                onClick={() => {
-                                    setSearchTerm('');
-                                    setDateFilter('');
-                                    setPaymentFilter('all');
-                                }}
-                                className="ml-2 text-blue-500 hover:text-blue-700"
-                            >
-                                Clear filters
-                            </button>
-                        )}
-                    </div>
-                )}
             </div>
 
             {/* Sales Table */}
@@ -201,43 +178,51 @@ const SalesList: React.FC<SalesListProps> = ({ sales, products }) => {
                         ) : (
                             sortedSales.map(sale => (
                                 <React.Fragment key={sale.id}>
-                                    <tr className="hover:bg-gray-50">
+                                    <tr
+                                        onClick={() => setSelectedSale(sale)}
+                                        className="hover:bg-gray-100 cursor-pointer transition duration-150"
+                                    >
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-gray-900">{sale.date}</div>
+                                            <span className="text-sm text-gray-900">{sale.date}</span>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm font-mono text-gray-500">#{sale.id}</div>
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm font-medium text-gray-900">{sale.customer}</div>
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-gray-900">
-                                                {sale.products.length} {sale.products.length === 1 ? 'item' : 'items'}
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                        <span
-                                className={`px-2 py-1 text-xs rounded-full ${sale.paymentMethod.toLowerCase() === 'due'
-                                                                ? 'bg-red-100 text-red-700'
-                                                                : 'bg-green-100 text-green-700'}`}>
-                                  {sale.paymentMethod}
-                        </span>
 
-                                        </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm font-bold text-gray-900">${sale.total.toFixed(2)}</div>
+                                            <span className="text-sm font-mono text-gray-500">#{sale.id}</span>
                                         </td>
+
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <button
-                                                onClick={() => setSelectedSale(sale)}
-                                                className="text-green-600 hover:text-green-800 cursor-pointer"
+                                            <span className="text-sm font-medium text-gray-900">{sale.customer}</span>
+                                        </td>
+
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <span className="text-sm text-gray-900">
+                                              {sale.products.length} {sale.products.length === 1 ? 'item' : 'items'}
+                                            </span>
+                                        </td>
+
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <span
+                                                className={`px-2 py-1 text-xs rounded-full ${
+                                                    sale.paymentMethod.toLowerCase() === 'due'
+                                                        ? 'bg-red-100 text-red-700'
+                                                        : 'bg-green-100 text-green-700'
+                                                }`}
                                             >
-                                                <Eye className="w-5 h-5" />
+                                              {sale.paymentMethod}
+                                            </span>
+                                        </td>
 
-                                            </button>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <span className="text-sm font-bold text-gray-900">
+                                              ${sale.total.toFixed(2)}
+                                            </span>
+                                        </td>
+
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <Eye className="w-5 h-5 text-green-500" />
                                         </td>
                                     </tr>
+
                                     {showDetails === sale.id && (
                                         <tr>
                                             <td colSpan={7} className="px-6 py-4 bg-gray-50">

@@ -10,6 +10,8 @@ const PaymentsReport: React.FC<PaymentsReportProps> = ({ sales }) => {
     const [dateRange, setDateRange] = useState<'week' | 'month' | 'year' | 'all'>('month');
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
 
     // Filter sales based on date range
     const filterSalesByDateRange = () => {
@@ -164,7 +166,7 @@ const PaymentsReport: React.FC<PaymentsReportProps> = ({ sales }) => {
                     </div>
                     <button
                         onClick={exportToCSV}
-                        className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 flex items-center transition-colors"
+                        className="cursor-pointer px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 flex items-center transition-colors"
                     >
                         <Download className="w-4 h-4 mr-2" />
                         Export Report

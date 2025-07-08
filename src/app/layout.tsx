@@ -12,9 +12,7 @@ export const metadata: Metadata = {
     description: 'A comprehensive business management system for inventory, sales, and purchases',
 };
 
-export default function RootLayout({
-                                       children,
-                                   }: Readonly<{
+export default function RootLayout({ children, }: Readonly<{
     children: React.ReactNode;
 }>) {
     return (
